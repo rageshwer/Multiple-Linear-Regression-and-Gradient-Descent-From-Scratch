@@ -165,7 +165,7 @@ Initializes:
 def dL_dm(self, X, y, m, b):
 ```
 
-This method computes the gradient vector (Vectorized approach for faster and accurate computation):
+This method computes the gradient vector :
 ```python
 slope += 2 * (y[i] - np.matmul(m, X[i]) - b) * (-X[i])
 ```
