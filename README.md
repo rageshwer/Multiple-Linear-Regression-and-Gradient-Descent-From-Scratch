@@ -165,9 +165,11 @@ Initializes:
 def dL_dm(self, X, y, m, b):
 ```
 
-This method computes the gradient vector :
+This method computes the gradient vector, Vectorized approach for fast computation:
 ```python
-slope += 2 * (y[i] - np.matmul(m, X[i]) - b) * (-X[i])
+errors= y-np.dot(X,m)-b      
+grad_vec=2*(np.dot(-X.T,errors))
+return grad_vec
 ```
 
 Returns:
@@ -187,13 +189,15 @@ def dL_db(self, X, y, m, b):
 This computes the derivative of loss with respect to bias.
 
 ```python
-slope += 2 * (y[i] - np.dot(m, X[i]) - b) * (-1)
+errors= y-np.dot(X,m)-b
+slope=-2*(np.sum(errors))
+return slope
 ```
 
 Returns:
 
 ```python
-scalar gradient
+gradient
 ```
 
 ---
@@ -229,14 +233,16 @@ self.dL_db()
 ### Step 3 — Update Parameters
 
 ```python
-self.m_new = self.m_old - (
-    self.alpha * gradient
+dm=dL_dm()
+self.m_old = self.m_old - (
+    self.alpha * dm
 )
 ```
 
 ```python
-self.b_new = self.b_old - (
-    self.alpha * gradient
+db=dL_db()
+self.b_old = self.b_old - (
+    self.alpha * db
 )
 ```
 
